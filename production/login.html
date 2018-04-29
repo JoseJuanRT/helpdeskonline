@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Login | Registro</title>
+
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+
+    <script>
+
+      /*Esta función será necesaria para validar el campo de la contraseña*/
+      function funcionesRegistro(){
+
+          var password = document.getElementById("password");
+          var password2 = document.getElementById("password2");
+          var error = document.getElementById("error");
+      }
+
+      /*Esta es la función que valida las contraseñas*/
+      function validar(){
+
+        funcionesRegistro();
+
+          if (password.value != password2.value){
+            /*Se le inserta un texto*/
+            error.innerHTML = "Las contraseñas no coinciden";
+            
+          }else{
+            error.innerHTML = " ";
+          }
+         
+      }
+
+    </script>
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form>
+              <h1>Iniciar sesión</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="Correo" required="" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Contraseña" required="" />
+              </div>
+
+              <div>
+                <a class="btn btn-default submit" href="index.html">Log in</a>
+                <!--<a class="reset_pass" href="#">Lost your password?</a>-->
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Nuevo en la empresa?
+                  <a href="#signup" class="to_register"> Regístrate </a>
+                </p>
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-cogs"></i> HelpDesk!</h1>
+                  <p>©2018 All Rights Reserved. José Juan Ripoll Tous 2º DAW</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+          <section class="login_content">
+            <form>
+              <h1>Registrar usuario</h1>
+              <div>
+                <input type="email" class="form-control" placeholder="Correo" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$" title="Introduzca una dirección de correo válida" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Contraseña" id="password" name="password" required pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" />
+              </div>
+              <p id="error"></p>
+              <div>
+                <input type="password" class="form-control" placeholder="Repita contraseña" id="password2" name="password2" required onblur="validar()" />
+              </div>
+              <div>
+                <button class="btn btn-default submit" href="index.html">Enviar</button>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Ya estás registrado ?
+                  <a href="#signin" class="to_register"> Log in </a>
+                </p>
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-cogs"></i> HelpDesk!</h1>
+                  <p>©2018 All Rights Reserved. José Juan Ripoll Tous 2º DAW</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+
+<?php
+  
+  /*Si se ha pulsado el botón*/
+  if (isset($_POST['boton'])){
+
+        /*Se almacenan las variables que necesitaremos guardar luego en la base de datos*/
+        $nickname = $_POST['nickname'];
+        $nickname = strtolower($nickname);
+        $password = $_POST['password'];
+        $password = md5($password);
+        $nombre = $_POST['nombreC'];
+        $email = $_POST['correoE'];
+        $firma = $_POST['firmaP'];
+        $tipo = 1;
+
+        $mysqli = new mysqli("mysql.hostinger.es","u418659611_wok","1neesf_","u418659611_wok");
+              $mysqli->set_charset("utf8");
+        /*Intentamos seleccionar el usuario que se quiere añadir a la base de datos*/
+        $query = $mysqli->query("SELECT `Login`, `Password` FROM `usuario` WHERE Login = '$nickname'");
+        /*Obtenemos la fila de la consulta*/
+        $fila = $query->fetch_array(MYSQLI_NUM);
+
+
+        /*Si el primer valor es igual al nick*/
+        if ($fila[0] == $nickname){
+
+          /*Se le indica al usuario que el usuario que intenta registrarse ya está creado*/
+          echo '<script language="javascript">alert("El usuario ya está registrado");</script>';
+  
+        }else{
+
+          /*Si el usuario que se pretende crear no existe en la base de datos*/
+
+          /*Insertamos los campos del usuario en nuestra base de datos*/
+          $mysqli->query("INSERT INTO `usuario`(`Login`, `Password`, `Nombre`, `Email`, `Firma`, `Tipo`) VALUES ('".$nickname."','".$password."','".$nombre."','".$email."','".$firma."','".$tipo."')");
+
+          /*Cerramos la conexión con el servidor*/
+          $query->close();
+          $mysqli->close();
+
+
+          /*Indicamos al usuario que se ha registrado correctamente*/
+          echo '<script language="javascript">alert("Usuario registrado correctamente");</script>';
+          /*Mandamos al usuario a la página de inicio*/
+          echo "<script> window.location.href='inicio.php'</script>";
+        }
+            
+  }
+
+?>
+
+
+
+  </body>
+</html>
