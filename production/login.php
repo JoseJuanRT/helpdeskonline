@@ -168,7 +168,7 @@ session_start();
         $email = strtolower($email);
 
 
-       	$mysqli = new mysqli("localhost","root","1neesf_","bbddhelpdesk");
+       	$mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
         $mysqli->set_charset("utf8");
         /*Intentamos seleccionar el usuario que se quiere añadir a la base de datos*/
         $query = $mysqli->query("SELECT `email`, `contrasenya` FROM `usuario` WHERE email = '$email'");
@@ -218,8 +218,8 @@ session_start();
 		        $emailL = strtolower($emailL);
 		        
 
-		       	$mysqli = new mysqli("localhost","root","1neesf_","bbddhelpdesk");
-		        $mysqli->set_charset("utf8");
+		       	$mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        		$mysqli->set_charset("utf8");
 
 		        /*Intentamos seleccionar el usuario que se quiere añadir a la base de datos*/
 		        $query = $mysqli->query("SELECT `email`, `contrasenya`, `permiso`, `icono`, `departamento`, `telefono` FROM `usuario` WHERE email = '$emailL' and contrasenya = '$passwordL'");

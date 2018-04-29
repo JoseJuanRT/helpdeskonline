@@ -218,7 +218,7 @@
          $fecha = new DateTime();
          $fecha = $fecha->format('Y-m-d H:i:s');
          
-            $mysqli = new mysqli("localhost","root","1neesf_","bbddhelpdesk");
+            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
             $mysqli->set_charset("utf8");
 
             $mysqli->query("INSERT INTO `ticket`(`tipo`, `titulo`, `fecha_apertura`, `usuario_email_solicitante` ) VALUES ('".$tipo."','".$titulo."','".$fecha."','".$email."')");
