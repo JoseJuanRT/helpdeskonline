@@ -1,5 +1,19 @@
+ <?php
+/*Se incluyen los ficheros necesarios*/
+include_once('funciones.php');
+session_start();
+
+
+     if (!isset($_SESSION['registrado'])){
+
+        echo "<script language='javascript'> window.location.href='login.php';</script>";
+
+        }
+  ?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -39,8 +53,8 @@
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
-                <h2>josejuan.ripoll</h2>
-                <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <h2><?php echo cortarNombre($_SESSION['registrado']->getEmail())?></h2>
+                <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php?salir=true">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
               </div>
@@ -62,14 +76,14 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Ver incidencias <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">Abiertas</a></li>
+                      <li><a href="incidenciaaierta.php">Abiertas</a></li>
                       <li><a href="incidenciacerrada.php">Cerradas</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Ver servicios <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">Abierta</a></li>
-                      <li><a href="serviciocerrado.php">Cerrada</a></li>
+                      <li><a href="#">Abiertos</a></li>
+                      <li><a href="serviciocerrado.php">Cerrados</a></li>
 
                     </ul>
                   </li>
@@ -93,7 +107,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/icono.png" alt="">josejuan.ripoll
+                    <img src="images/icono.png" alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -102,7 +116,7 @@
                         <span>Editar perfil</span>
                       </a>
                     </li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="login.php?salir=true"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 
@@ -120,22 +134,11 @@
 
                  <!-- Add context -->
 
-                 <div class="right_col" role="main">
+          <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
                 <h3>Portal del usuario <small>Gestión de tickets</small></h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -143,7 +146,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Servicio pendiente</h2>
+                    <h2>Solicitudes de servicio pendientes</h2>
                     
                     <div class="clearfix"></div>
                   </div>
@@ -158,36 +161,46 @@
                           <th>Título</th>
                           <th>Solicitante</th>
                           <th>Técnico Asignado</th>
-                          <th>Fecha</th>
+                          <th>Fecha apertura</th>
                           <th>Estado</th>
 
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>#</td>
-                          <td>
-                            <a>123</a>
-                          </td>
-                          <td>
-                            <a>Problema impresora AlicanteProblema impresora AlicanteProblema impresora AlicanteProblema impresora AlicanteProblema impresora AlicanteProblema impresora AlicanteProblema impresora AlicanteProblema impresora Alicante</a>
-                          </td>
-                          <td>
-                           <a>JoséJuan.Ripoll</a>
-                          </td>
-                          <td>
-                           <a>Administrador</a>
-                          </td>
-                          <td>
-                           <a>04/05/2018</a>
-                          </td>
-                          <td>
-                             <a>Abierto</a>
-                          </td>
-                        </tr>
 
-                      </tbody>
-                    </table>
+                      <?php 
+
+                                  $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+                                  $mysqli->set_charset("utf8");
+                       
+                                  $login = $_SESSION['registrado'] -> getEmail();
+
+                                 
+                                  $query = $mysqli->query("SELECT * FROM `ticket` WHERE `usuario_email_solicitante`= '$login'AND`estado`= 'Abierta'AND `tipo`= 'solicitud' ORDER BY `id` = 0");
+
+                                  echo "<body>";
+                                  /*Mientras existan datos a recorrer en la búsqueda*/
+                                  while($fila = $query->fetch_array(MYSQLI_NUM)){
+
+                                       echo "<tr>";
+                                          echo "<td> # </td>";
+                                          echo "<td><a>".$fila[0]."</a></td>";
+                                          echo "<td><a>".$fila[2]."</a></td>";
+                                          echo "<td><a>".$fila[7]."</a></td>";
+                                          echo "<td><a>".$fila[3]."</a></td>";
+                                          echo "<td><a>".$fila[6]."</a></td>";
+                                          echo "<td><a>".$fila[4]."</a></td>";
+                                        echo "</tr>";
+
+                                  }
+
+                                  echo "</body>";
+                                  /*Cerrramos la tabla*/
+                                  echo "</table>";
+                                  /*Cerramos la conexión con la base de datos*/
+                                  $mysqli->close();
+                              ?>
+
+
                     <!-- end project list -->
 
                   </div>
@@ -198,11 +211,8 @@
         <!-- /page content -->
 
 
-
-
       </div>
     </div>
-
 
 
     <!-- jQuery -->
