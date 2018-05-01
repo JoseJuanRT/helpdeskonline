@@ -76,7 +76,7 @@ session_start();
                   </li>
                   <li><a><i class="fa fa-edit"></i> Ver incidencias <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="incidenciaaierta.php">Abiertas</a></li>
+                      <li><a href="incidenciaabierta.php">Abiertas</a></li>
                       <li><a href="incidenciacerrada.php">Cerradas</a></li>
                     </ul>
                   </li>
