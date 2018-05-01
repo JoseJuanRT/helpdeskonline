@@ -131,7 +131,7 @@ session_start();
                 <input type="password" class="form-control" placeholder="Repita contraseña" id="password2" required onblur="validar()" />
               </div>
               <div>
-                <button class="btn btn-default submit" id="botonR" name="botonR">Enviar</button>
+                <button class="btn btn-default submit" id="botonR" name="botonR" href="#signin">Enviar</button>
               </div>
 
               <div class="clearfix"></div>
