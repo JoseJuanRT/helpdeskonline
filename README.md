@@ -16,11 +16,10 @@ Implementación de cuenta github en hostiguer para poder exportar los cambios de
 Creación de estructura HTML para el panel de usuarios registrados (Usuarios que crearán incidencias)
 Implementar funcionalidad en la estructura del panel de usuarios, páginas de apertura de incidencias y servicios.
 Implementar funcionalidad en la estructura del panel de usuarios, visualización de incidencias y servicios.
+Página para editar perfil de usuario registrado.
 
 
 TODO:
-
-Crear panel para modificar datos de usuario.
 
 Crear estructura HTML para panel de usuarios técnicos.
 
