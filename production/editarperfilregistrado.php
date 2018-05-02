@@ -296,7 +296,7 @@
 				}else{
 
 					/*Si la imágen cumple con el tamaño, le indicamos la ruta de destino*/
-					$destino = "images/";
+					$destino = "/home/u752761204/public_html/production/";
 					/*Creamos un identificador único*/
 					$id = time();
 					/*Le cambiamos el nombre a la imágen añadiéndole el id único*/
@@ -312,11 +312,11 @@
 							if ($_SESSION['registrado']->getIcono() != 'images/icono.png'){
 											
 							/*Borramos la imágen que tenía antes el usuario en la carpeta del servidor*/
-							unlink($_SESSION['registrado'] -> getIcono());
+							unlink("/home/u752761204/public_html/production/".$_SESSION['registrado'] -> getIcono());
 							}
 										
 							/*Cambiamos la imágen en la sesión del usuario*/
-							$_SESSION['registrado'] -> setIcono($destino);
+							$_SESSION['registrado'] -> setIcono($_FILES['icono']['name']);
 							/*Modificamos la variable creada anteriormente*/
 							$icono = $_SESSION['registrado'] -> getIcono();
 
