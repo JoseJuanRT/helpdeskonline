@@ -212,7 +212,8 @@ session_start();
 		/*Si se ha pulsado el botón de login*/
 		if (isset($_POST['botonL'])){
 
-				$passwordL = $_POST['contrasenyaL'];
+				    $passwordL = $_POST['contrasenyaL'];
+            $_SESSION['contrasenyaSinCifrar'] = $passwordL;
 		        $passwordL = md5($passwordL);
 		        $emailL = $_POST['correoL'];
 		        $emailL = strtolower($emailL);

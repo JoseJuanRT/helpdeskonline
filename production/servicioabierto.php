@@ -49,7 +49,7 @@ session_start();
             <div class="profile clearfix">
 
               <div class="profile_pic">
-                <img src="images/icono.png" alt="..." class="img-circle profile_img">
+                <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
@@ -107,12 +107,12 @@ session_start();
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/icono.png" alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
+                    <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li>
-                      <a href="javascript:;">
+                      <a href="editarperfilregistrado.php">
                         <span>Editar perfil</span>
                       </a>
                     </li>
