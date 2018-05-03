@@ -296,7 +296,7 @@
 				}else{
 
 					/*Si la imágen cumple con el tamaño, le indicamos la ruta de destino*/
-					$destino = "/home/u752761204/public_html/production/";
+					$destino = "/home/u752761204/public_html/production/images/";
 					/*Creamos un identificador único*/
 					$id = time();
 					/*Le cambiamos el nombre a la imágen añadiéndole el id único*/
@@ -316,7 +316,7 @@
 							}
 										
 							/*Cambiamos la imágen en la sesión del usuario*/
-							$_SESSION['registrado'] -> setIcono($_FILES['icono']['name']);
+							$_SESSION['registrado'] -> setIcono("images/".$_FILES['icono']['name']);
 							/*Modificamos la variable creada anteriormente*/
 							$icono = $_SESSION['registrado'] -> getIcono();
 
