@@ -275,8 +275,8 @@
     	$icono = "images/icono.png";
 
 
-            $mysqli = new mysqli("localhost","root","1neesf_","bbddhelpdesk");
-            $mysqli->set_charset("utf8");
+		    $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        	$mysqli->set_charset("utf8");
 
             if (isset($_POST['telefono'])){
             	
@@ -326,8 +326,6 @@
 							$telefono = $_SESSION['registrado'] -> getTelefono();
 							/*En caso de que la imágen no se haya podido guardar se le indica al usuario*/
 							echo '<script language="javascript">alert("Se ha producido un error al guardar la imagen!");</script>';
-							echo '<script language="javascript">alert("$icono");</script>';
-							echo '<script language="javascript">alert("$destino");</script>';
 
 							}
 
@@ -343,7 +341,7 @@
 				/*Actualizamos los campos nombre, email y firma en la sesión y también en las variables declaradas al principio*/
 				$usuario = $_SESSION['registrado'] -> getEmail();
 				$_SESSION['registrado'] -> setTelefono($telefono);
-				$_SESSION['registrado'] -> setIcono($icono);
+				$_SESSION['registrado'] -> setIcono("images/icono.png");
 				$_SESSION['contrasenyaSinCifrar'] = $_POST['password'];
 				$contrasenya = md5($_POST['password']);
 
