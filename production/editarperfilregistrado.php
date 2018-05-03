@@ -326,6 +326,8 @@
 							$telefono = $_SESSION['registrado'] -> getTelefono();
 							/*En caso de que la imágen no se haya podido guardar se le indica al usuario*/
 							echo '<script language="javascript">alert("Se ha producido un error al guardar la imagen!");</script>';
+							echo '<script language="javascript">alert("$icono");</script>';
+							echo '<script language="javascript">alert("$destino");</script>';
 
 							}
 
