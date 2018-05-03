@@ -341,7 +341,7 @@
 				/*Actualizamos los campos nombre, email y firma en la sesión y también en las variables declaradas al principio*/
 				$usuario = $_SESSION['registrado'] -> getEmail();
 				$_SESSION['registrado'] -> setTelefono($telefono);
-				$_SESSION['registrado'] -> setIcono("images/icono.png");
+				$_SESSION['registrado'] -> setIcono($icono);
 				$_SESSION['contrasenyaSinCifrar'] = $_POST['password'];
 				$contrasenya = md5($_POST['password']);
 
