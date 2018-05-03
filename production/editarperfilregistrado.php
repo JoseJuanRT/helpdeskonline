@@ -282,6 +282,10 @@
             	
             	$telefono = $_POST['telefono'];
 
+            }else if(isset($_POST['telefono'] == " ")){
+
+				$_SESSION['registrado'] -> setTelefono("Desconocido");
+
             }
 
 			if($_FILES['icono']['name'] != ""){
