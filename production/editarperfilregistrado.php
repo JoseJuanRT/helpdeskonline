@@ -284,6 +284,12 @@
 
             }
 
+            if ($telefono == ""){
+
+              $telefono = "Desconocido";
+              
+            }
+
 			if($_FILES['icono']['name'] != ""){
 
 				/*Verificamos que no sea más grande de 500KB*/
