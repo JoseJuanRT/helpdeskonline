@@ -49,7 +49,7 @@ session_start();
             <div class="profile clearfix">
 
               <div class="profile_pic">
-                <img ssrc='<?php echo $_SESSION["registrado"]->getIcono()?>' alt="..." class="img-circle profile_img">
+                <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>

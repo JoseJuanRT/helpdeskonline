@@ -62,3 +62,15 @@
     }
 
 ?>
+
+<?php
+	/*Funcion para abrir un conexión a la base de datos*/
+	function obtenerNumeroSerie($stringAcortar){
+
+        $arrayEmail = explode(",", $stringAcortar);
+
+        return $arrayEmail[2];
+
+    }
+
+?>

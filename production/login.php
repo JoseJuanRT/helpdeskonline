@@ -268,9 +268,20 @@ session_start();
 								$_SESSION['registrado'] -> setAvatar($fila[5]);
 							}*/
 
-							unset($_POST["botonL"]);
+              unset($_POST["botonL"]);
 
-					     echo "<script language='javascript'> window.location.href='abririncidencia.php';</script>";
+              if ($fila[2] == 1){
+                
+                 echo "<script language='javascript'> window.location.href='abririncidencia.php';</script>";
+
+              }else if ($fila[2] == 2){
+
+                 echo "<script language='javascript'> window.location.href='incidenciassinasignar.php';</script>";
+              }else{
+
+                 echo "<script language='javascript'> window.location.href='abririncidencia.php';</script>";
+                 
+              }
 					
 				}
 

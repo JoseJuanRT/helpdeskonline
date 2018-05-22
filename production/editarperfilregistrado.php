@@ -361,12 +361,13 @@
 						echo "<script> window.location.href='abririncidencia.php'</script>";
 					}else{
 						echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
-						echo "<script> window.location.href='editarperfilregistrado.php'</script>";
+						echo "<script> window.location.href='abririncidencia.php'</script>";
 					}
 				
 				}else{
 					/*En caso de que la variable semáforo sema mayor a 0, quiere decir que se ha producido algún error. Por lo que mantenemos al usuario en la misma página*/
-					echo "<script> window.location.href='editarperfilregistrado.php'</script>";
+          echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
+					echo "<script> window.location.href='abririncidencia.php'</script>";
 				}	
 				
 			}
