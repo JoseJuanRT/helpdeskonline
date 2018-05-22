@@ -279,8 +279,8 @@
 
             if ($telefono == ""){
             	
-            	echo '<script language="javascript">alert("Variable teléfono en blanco codificamos valor a Desconocido");</script>';
             	$telefono = "Desconocido";
+              
             }
 
 			if($_FILES['icono']['name'] != ""){
