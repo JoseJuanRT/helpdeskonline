@@ -5,7 +5,7 @@
 		private $email;
 		private $contrasenya;
 		private $permiso;
-		private $icono = "images/icono.png";
+		private $icono;
 		private $departamento;
 		private $telefono;
 

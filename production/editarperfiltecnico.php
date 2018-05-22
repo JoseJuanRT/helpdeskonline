@@ -10,7 +10,13 @@
 
     if (!isset($_SESSION['registrado'])) {
     
-          echo "<script> window.location.href='login.php'</script>";
+          echo "<script> window.location.href='login.php?salir=true'</script>";
+
+    }
+    
+    if ($_SESSION['registrado']->getPermiso() != 2){
+
+       echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
 
     }
 
@@ -99,30 +105,17 @@
             <!-- /menu profile quick info -->
             <br />
 
-            <!-- sidebar menu -->
+                        <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Abrir ticket <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="abririncidencia.php">Incidencia</a></li>
-                      <li><a href="abrirservicio.php">Servicio</a></li>
-                    </ul>
+                  <li><a href="incidenciassinasignar.php"><i class="fa fa-home"></i> Tickets sin asignar</span></a>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Ver incidencias <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="incidenciaabierta.php">Abiertas</a></li>
-                      <li><a href="incidenciacerrada.php">Cerradas</a></li>
-                    </ul>
+                  <li><a href="incidenciasasignadas.php"><i class="fa fa-edit"></i> Ver tickets pendientes</span></a>
+                  <li><a href="verusuariosregistrados.php"><i class="fa fa-edit"></i> Datos de usuarios</span></a>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Ver servicios <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="servicioabierto.php">Abierta</a></li>
-                      <li><a href="serviciocerrado.php">Cerrada</a></li>
-                    </ul>
                   </li>
-
                 </ul>
               </div>
               
@@ -176,7 +169,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="x_panel">
                                     <div class="x_title">
-                                      <h2>Perfil de usuario registrado</h2>
+                                      <h2>Perfil de usuario Técnico</h2>
                                       <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
@@ -275,8 +268,8 @@
     	$icono = "images/icono.png";
 
 
-		      $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-        	$mysqli->set_charset("utf8");
+          $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+          $mysqli->set_charset("utf8");
 
             if (isset($_POST['telefono'])){
             	
@@ -285,9 +278,9 @@
             }
 
             if ($telefono == ""){
-
-              $telefono = "Desconocido";
-              
+            	
+            	echo '<script language="javascript">alert("Variable teléfono en blanco codificamos valor a Desconocido");</script>';
+            	$telefono = "Desconocido";
             }
 
 			if($_FILES['icono']['name'] != ""){
@@ -301,43 +294,43 @@
 					
 				}else{
 
-					/*Si la imágen cumple con el tamaño, le indicamos la ruta de destino*/
-					$destino = "/home/u752761204/public_html/production/images/";
-					/*Creamos un identificador único*/
-					$id = time();
-					/*Le cambiamos el nombre a la imágen añadiéndole el id único*/
-					$_FILES['icono']['name'] = $id.$_FILES['icono']['name'];
-					/*Concatenamos el nombre de la imágen a la ruta*/
-					$destino = $destino.$_FILES['icono']['name'];
+          /*Si la imágen cumple con el tamaño, le indicamos la ruta de destino*/
+          $destino = "/home/u752761204/public_html/production/images/";
+          /*Creamos un identificador único*/
+          $id = time();
+          /*Le cambiamos el nombre a la imágen añadiéndole el id único*/
+          $_FILES['icono']['name'] = $id.$_FILES['icono']['name'];
+          /*Concatenamos el nombre de la imágen a la ruta*/
+          $destino = $destino.$_FILES['icono']['name'];
 
-						/*Utilizamos esta función dentro del if para que si es true siga trabajando*/
-						if(move_uploaded_file($_FILES['icono']['tmp_name'], $destino)){ 
+            /*Utilizamos esta función dentro del if para que si es true siga trabajando*/
+            if(move_uploaded_file($_FILES['icono']['tmp_name'], $destino)){ 
 
-							/*De esta manera evitamos eliminar el icono por defecto de la carpeta del servidor para los usuarios recién registrados,
-							donde ico.jpg será el nombre de la imágen por defecto*/
-							if ($_SESSION['registrado']->getIcono() != 'images/icono.png'){
-											
-							/*Borramos la imágen que tenía antes el usuario en la carpeta del servidor*/
-							unlink("/home/u752761204/public_html/production/".$_SESSION['registrado'] -> getIcono());
-							}
-										
-							/*Cambiamos la imágen en la sesión del usuario*/
-							$_SESSION['registrado'] -> setIcono("images/".$_FILES['icono']['name']);
-							/*Modificamos la variable creada anteriormente*/
-							$icono = $_SESSION['registrado'] -> getIcono();
+              /*De esta manera evitamos eliminar el icono por defecto de la carpeta del servidor para los usuarios recién registrados,
+              donde ico.jpg será el nombre de la imágen por defecto*/
+              if ($_SESSION['registrado']->getIcono() != 'images/icono.png'){
+                      
+              /*Borramos la imágen que tenía antes el usuario en la carpeta del servidor*/
+              unlink("/home/u752761204/public_html/production/".$_SESSION['registrado'] -> getIcono());
+              }
+                    
+              /*Cambiamos la imágen en la sesión del usuario*/
+              $_SESSION['registrado'] -> setIcono("images/".$_FILES['icono']['name']);
+              /*Modificamos la variable creada anteriormente*/
+              $icono = $_SESSION['registrado'] -> getIcono();
 
-							}else{
+              }else{
 
-							$semaforoError++;
-							$telefono = $_SESSION['registrado'] -> getTelefono();
-							/*En caso de que la imágen no se haya podido guardar se le indica al usuario*/
-							echo '<script language="javascript">alert("Se ha producido un error al guardar la imagen!");</script>';
+              $semaforoError++;
+              $telefono = $_SESSION['registrado'] -> getTelefono();
+              /*En caso de que la imágen no se haya podido guardar se le indica al usuario*/
+              echo '<script language="javascript">alert("Se ha producido un error al guardar la imagen!");</script>';
 
-							}
+              }
 
-						}
-								
-					}
+            }
+                
+          }
 
 
 
@@ -358,16 +351,16 @@
 
 						/*Le indicamos al usuario que los datos han sido actualizados y lo mandamos a la página de inicio*/
 						echo '<script language="javascript">alert("Cambios realizados correctamente");</script>';
-						echo "<script> window.location.href='abririncidencia.php'</script>";
+						echo "<script> window.location.href='incidenciassinasignar.php'</script>";
 					}else{
 						echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
-						echo "<script> window.location.href='abririncidencia.php'</script>";
+						echo "<script> window.location.href='incidenciassinasignar.php'</script>";
 					}
 				
 				}else{
-					/*En caso de que la variable semáforo sema mayor a 0, quiere decir que se ha producido algún error. Por lo que mantenemos al usuario en la misma página*/
+					/*En caso de que la variable semáforo sema mayor a 0, quiere decir que se ha producido algún error. */
           echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
-					echo "<script> window.location.href='abririncidencia.php'</script>";
+					echo "<script> window.location.href='incidenciassinasignar.php'</script>";
 				}	
 				
 			}
