@@ -16,6 +16,13 @@ session_start();
 
      }
 
+     if (!isset($_GET['ticket'])){
+
+      echo '<script language="javascript">alert("No puede modifar un ticket sin seleccionarlo, le redirigimos a la página de gestión");</script>';
+      echo "<script language='javascript'> window.location.href='incidenciasasignadas.php';</script>";
+      
+     }
+
 
   ?>
 
