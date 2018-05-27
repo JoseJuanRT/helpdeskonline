@@ -16,6 +16,7 @@ session_start();
 
      }
 
+
   ?>
 
 
@@ -41,6 +42,18 @@ session_start();
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+
+      $(document).ready(function(){
+        $("button").click(function(){
+          id = $(this).parents("tr").find("td").eq(1).html();
+          user = $(this).parents("tr").find("td").eq(6).html();
+          url = "modificarImpresoras.php?ticket="+id+"&user="+user;
+          location.href=url;
+        });
+      });
+
+    </script>
 
   </head>
 
@@ -81,14 +94,15 @@ session_start();
                   <li><a href="incidenciassinasignar.php"><i class="fa fa-home"></i> Tickets sin asignar</span></a>
                   </li>
                   <li><a href="incidenciasasignadas.php"><i class="fa fa-edit"></i> Ver tickets pendientes</span></a>
-                  <li><a href="#"><i class="fa fa-edit"></i> Datos de usuarios</span></a>
                   </li>
-                  <li><a href="verimpresoras.php"><i class="fa fa-edit"></i> Inventario Impresoras</span></a>
+                  <li><a href="verusuariosregistrados.php"><i class="fa fa-edit"></i> Datos de usuarios</span></a>
+                  </li>
+                  <li><a href="#"><i class="fa fa-edit"></i> Inventario Impresoras</span></a>
                   </li>
                   <li><a href="verequipos.php"><i class="fa fa-edit"></i> Inventario Equipos</span></a>
                   </li>
                   <li><a href="verservidores.php"><i class="fa fa-edit"></i> Inventario Servidores</span></a>
-                  </li>   
+                  </li>                                 
                 </ul>
               </div>
               
@@ -147,7 +161,7 @@ session_start();
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Datos de usuarios registrados</h2>
+                    <h2>Inventario de impresoras</h2>
                     
                     <div class="clearfix"></div>
                   </div>
@@ -158,20 +172,26 @@ session_start();
                       <thead>
                         <tr>
                           <th style="width: 1%">#</th>
-                          <th style="width: 20%">Usuario</th>
-                          <th>Ubicación icono</th>
-                          <th>Departamento</th>
-                          <th>Teléfono</th>
+                          <th style="width: 20%">ID item</th>
+                          <th>Marca</th>
+                          <th>SO</th>
+                          <th>Modelo</th>
+                          <th>Estado</th>
+                          <th>Usuario asignado</th>
+                          <th>IP</th>
+                          <th>Asigar Ticket</th>
                         </tr>
                       </thead>
 
                       <?php 
 
-                                  $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-                                  $mysqli->set_charset("utf8");
+                            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+                            $mysqli->set_charset("utf8");
+                       
+                                  $login = $_SESSION['registrado'] -> getEmail();
 
                                  
-                                  $query = $mysqli->query("SELECT * FROM `usuario` WHERE `permiso`= 1");
+                                  $query = $mysqli->query("SELECT * FROM `impresora` ORDER BY `estado` = 'En Stock'");
 
                                   echo "<body>";
                                   /*Mientras existan datos a recorrer en la búsqueda*/
@@ -180,9 +200,13 @@ session_start();
                                        echo "<tr>";
                                           echo "<td> # </td>";
                                           echo "<td>".$fila[0]."</td>";
+                                          echo "<td>".$fila[1]."</td>";
+                                          echo "<td>".$fila[2]."</td>";
                                           echo "<td>".$fila[3]."</td>";
                                           echo "<td>".$fila[4]."</td>";
                                           echo "<td>".$fila[5]."</td>";
+                                          echo "<td>".$fila[6]."</td>";
+                                          echo '<td><button>Modificar impresora</button></td>';
                                         echo "</tr>";
 
                                   }

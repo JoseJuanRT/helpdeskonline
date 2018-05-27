@@ -18,9 +18,9 @@ session_start();
 
      if (!isset($_GET['ticket'])){
 
-      echo '<script language="javascript">alert("No puede modifar un ticket sin seleccionarlo, le redirigimos a la página de gestión");</script>';
-      echo "<script language='javascript'> window.location.href='incidenciasasignadas.php';</script>";
-      
+     	echo '<script language="javascript">alert("No puede gestionar el inventario sin seleccionarlo, le redirigimos a la página de gestión");</script>';
+     	echo "<script language='javascript'> window.location.href='verequipos.php';</script>";
+     	
      }
 
 
@@ -48,49 +48,6 @@ session_start();
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-
-      <script>
-
-      /*Esta es la función que valida las contraseñas*/
-      function validar(){
-
-
-      var estado = document.getElementById("estado");
-      var boton = document.getElementById("botonS");
-      var error = document.getElementById("error");
-      var error2 = document.getElementById("error2");
-      var resolucion = document.getElementById("resolucion");
-
-
-
-          if (estado.value == "Cerrada" && resolucion.value == ""){
-            /*Se le inserta un texto*/
-            error2.innerHTML = "Cambie el estado a abieta o introduzca resolucion y haga clic fuera del formulario para poder guardar los cambios";
-            boton.disabled = true;
-            
-          }else if (resolucion.value != "" && estado.value == "Abierta"){
-
-            /*Se le inserta un texto*/
-            error.innerHTML = "Cambie el estado a cerrado y haga clic fuera del formulario para poder cerrar el ticket";
-            boton.disabled = true;
-
-          }else if(estado.value == "Abierta" && resolucion.value == ""){
-
-            error2.innerHTML = " ";
-            boton.disabled = false;
-
-
-          }else{
-
-            error2.innerHTML = " ";
-            error.innerHTML = " ";
-            boton.disabled = false;
-
-          }
-         
-      }
-
-    </script>
 
   </head>
 
@@ -139,7 +96,7 @@ session_start();
                   <li><a href="verequipos.php"><i class="fa fa-edit"></i> Inventario Equipos</span></a>
                   </li>
                   <li><a href="verservidores.php"><i class="fa fa-edit"></i> Inventario Servidores</span></a>
-                  </li>
+                  </li>                   
                 </ul>
               </div>
               
@@ -198,7 +155,7 @@ session_start();
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Gestión de ticket</h2>
+                    <h2>Gestión de inventario</h2>
                     
                     <div class="clearfix"></div>
                   </div>
@@ -218,9 +175,9 @@ session_start();
                                     </div>
                                     <div class="x_content">
 
-                                      <form enctype="multipart/form-data" action='' method='POST' class="form-horizontal form-label-left">
+                                      <form method='POST' class="form-horizontal form-label-left">
 
-                                        <span class="section">Datos del ticket</span>
+                                        <span class="section">Datos del item</span>
 
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="id">ID <span class="required">*</span>
@@ -231,30 +188,52 @@ session_start();
                                         </div>
 
                                         <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="solicitante">Usuario solicitante <span class="required">*</span>
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="marca">Marca <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="solicitante" name="solicitante" required="required" class="form-control col-md-7 col-xs-12" value='<?php echo $_GET['solicitante']?>' disabled></input>
+                                            <input type="text" id="marca" name="marca" class="form-control col-md-7 col-xs-12" value='<?php echo obtenerMarcaEquipo($_GET['ticket'])?>'></input>
                                           </div>
                                         </div>
 
                                         <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="titulo">Título <span class="required">*</span>
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="so">Sistema Operativo <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="titulo" name="titulo" required="required" class="form-control col-md-7 col-xs-12" value='<?php echo $_GET['titulo']?>' disabled></input>
+                                            <input type="text" id="so" name="so" class="form-control col-md-7 col-xs-12" value='<?php echo obtenerSoEquipo($_GET['ticket'])?>'></input>
                                           </div>
                                         </div>
+
+                                        <div class="item form-group">
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="modelo">Modelo <span class="required">*</span>
+                                          </label>
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="modelo" name="modelo" class="form-control col-md-7 col-xs-12" value='<?php echo obtenerModeloEquipo($_GET['ticket'])?>'></input>
+                                          </div>
+                                        </div>                                        
 
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="estado">Estado <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
                                          
-                                              <select id="estado" name="estado" onblur="validar()">
-                                                
-                                                <option>Abierta</option>
-                                                <option>Cerrada</option>
+                                              <select id="estado" name="estado">
+
+                                                <?php 
+
+                                                  if (obtenerEstadoEquipo($_GET['ticket']) == "En Stock") {
+                                                   
+                                                        echo "<option>En Stock</option>";
+                                                        echo "<option>En Uso</option>";
+
+                                                  }else{
+
+                                                        echo "<option>En Uso</option>";
+                                                        echo "<option>En Stock</option>";
+                                                  }
+
+                                                 
+
+                                                 ?>
 
                                               </select>
 
@@ -265,46 +244,39 @@ session_start();
                                         <center><p id="error" style="color:red"></p></center>
 
                                         <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="equipo">Equipo <span class="required">*</span>
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="usuario">Usuario asignado <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
                                          
-                                              <select id="equipo" name="equipo">
+                                              <select id="usuario" name="usuario">
                                                 
                                                 <?php 
 
-                                                    $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-                                                    $mysqli->set_charset("utf8");
+                                                  $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+                                                  $mysqli->set_charset("utf8");
 
 
 
-                                                    $equipo = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `equipo` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
-
-
-                                                    $test = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `equipo` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
+                                                    $usuario = $mysqli->query("SELECT `email` FROM `usuario`");
+                                                    $test = $mysqli->query("SELECT `email` FROM `usuario`");
 
                                                                       $testDatos = $test->fetch_array(MYSQLI_NUM);
-                                                                      
-
 
                                                                       if ($testDatos[0] != ""){
 
-                                                                          echo "<option>"."No corresponde"."</option>";
-                                                                          while($fila = $equipo->fetch_array(MYSQLI_NUM)){
+                                                                          echo "<option>"."Usuario actual = ".$_GET['user']."</option>";
+                                                                          echo "<option>"."Sin Asignar"."</option>";
 
-                                                                            echo "<option>".$fila[0].",".$fila[1].",".$fila[2]."</option>";
+                                                                          while($fila = $usuario->fetch_array(MYSQLI_NUM)){
 
-                                                                           
+                                                                            echo "<option>".$fila[0]."</option>";
+
                                                                           }
-
-
 
                                                                       }else{
 
-
-                                                                        echo "<option>"."No corresponde"."</option>";
+                                                                        echo "<option>"."Sin Asignar"."</option>";
                                                                         
-
                                                                       }
                                                     
                                                                           /*Cerramos la conexión con la base de datos*/
@@ -317,123 +289,19 @@ session_start();
                                           </div>
                                         </div>
 
-
-
                                         <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="impresora">Impresora <span class="required">*</span>
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ip">IP <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                         
-                                              <select id="impresora" name="impresora">
-                                                
-                                                <?php 
-
-                                                    $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-                                                    $mysqli->set_charset("utf8");
-
-
-                                                    $impresora = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `impresora` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
-                                          
-                                                    $test = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `impresora` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
-
-                                                                      $testDatos = $test->fetch_array(MYSQLI_NUM);
-                                                                      
-
-
-                                                                      if ($testDatos[0] != ""){
-
-                                                                          echo "<option>"."No corresponde"."</option>";
-                                                                          while($fila = $impresora->fetch_array(MYSQLI_NUM)){
-
-                                                                            echo "<option>".$fila[0].",".$fila[1].",".$fila[2]."</option>";
-
-                                                                           
-                                                                          }
-
-
-                                                                      }else{
-
-
-                                                                        echo "<option>"."No corresponde"."</option>";
-                                                                        
-
-                                                                      }
-
-                                                                          /*Cerramos la conexión con la base de datos*/
-                                                                          $mysqli->close();
-
-                                                ?>
-
-                                              </select>
-
+                                            <input type="text" id="ip" name="ip" class="form-control col-md-7 col-xs-12" maxlength="16" value='<?php echo obtenerIpEquipo($_GET['ticket'])?>' onblur="validar()" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}.(?:\d|[12]\d|3[01])$" title="Debes introducir una IP válida xxx.xxx.xxx.xxx"></input>
                                           </div>
                                         </div>
-                    
-
-                                        <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="servidor">Servidor <span class="required">*</span>
-                                          </label>
-                                          <div class="col-md-6 col-sm-6 col-xs-12">
-                                         
-                                              <select id="servidor" name="servidor">
-                                                
-                                                <?php 
-
-                                                    $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-                                                    $mysqli->set_charset("utf8");
-
-
-                                                    $servidor = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `servidor` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
-                                                    $test = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `servidor` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
-
-                                                                      $testDatos = $test->fetch_array(MYSQLI_NUM);
-
-
-                                                                      if ($testDatos[0] != ""){
-
-                                                                          echo "<option>"."No corresponde"."</option>";
-                                                                          while($fila = $servidor->fetch_array(MYSQLI_NUM)){
-
-                                                                            echo "<option>".$fila[0].",".$fila[1].",".$fila[2]."</option>";
-
-                                                                           
-                                                                          }
-
-
-                                                                      }else{
-
-
-                                                                        echo "<option>"."No corresponde"."</option>";
-                                                                        
-
-                                                                      }
-
-
-                                                                          /*Cerramos la conexión con la base de datos*/
-                                                                          $mysqli->close();
-
-                                                ?>
-
-                                              </select>
-
-                                          </div>
-                                        </div>
-
-                                        <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="resolucion">Resolucion <span class="required">*</span>
-                                          </label>
-                                          <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea type="text" id="resolucion" name="resolucion" class="form-control col-md-7 col-xs-12" maxlength="250" onblur="validar()"></textarea>
-                                          </div>
-                                        </div>
-                                        <center><p id="error2" style="color:red"></p></center>
 
                                         <div class="ln_solid"></div>
                                         <div class="form-group">
                                         <br></br>
                                           <center>
                                           <div class="col-md-6 col-md-offset-3">
-                                            <!--<button class="btn btn-primary">Cancelar</button>-->
                                             <button type="submit" id="botonS" type="submit" name="botonS" class="btn btn-danger">Guardar cambios</button>
                                           </div>
                                           </center>
@@ -470,38 +338,43 @@ session_start();
 
             /*Se almacenan las variables que necesitaremos guardar luego en la base de datos*/
             $id = $_GET['ticket'];
+            $marca = $_POST['marca'];
+            $so = $_POST['so'];
+            $modelo = $_POST['modelo'];
             $estado = $_POST['estado'];
-            $resolucion = $_POST['resolucion'];
+            $usuario = $_POST['usuario'];
+            $usuarioOriginal = "Usuario actual = ".$_GET['user'];
+            $ip = $_POST['ip'];
 
-            if($_POST['equipo']!= "No corresponde"){
+            if($marca == ""){
 
-            $equipo = obtenerNumeroSerie($_POST['equipo']);
-
-            }else{
-
-              $equipo = 'NULL';
+            $marca = "Sin marca";
 
             }
 
-            if($_POST['impresora']!= "No corresponde"){
+            if($so == ""){
 
-            $impresora = obtenerNumeroSerie($_POST['impresora']);
+            $so = "Sin sistema operativo";
 
-            }else{
-
-              $impresora = 'NULL';
-              
             }
-            
-            if($_POST['servidor']!= "No corresponde"){
 
-            $servidor = obtenerNumeroSerie($_POST['servidor']);
+            if($modelo == ""){
 
-            }else{
+            $modelo = "Sin modelo";
 
-              $servidor = 'NULL';
-              
             }
+
+            if($ip == ""){
+
+            $ip = "255.255.255.255";
+
+            }
+
+            if ($usuario == $usuarioOriginal){
+                  
+              $usuario = $_GET['user'];
+
+            }          
 
 
             $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
@@ -509,8 +382,7 @@ session_start();
 
 
             /*Mediante las variables declaradas al principio y en las líneas anteriores, actualizamos los datos del usuario en la base de datos*/
-            if($query = $mysqli->query("UPDATE `ticket` SET `equipo_numeroDeSerie`=$equipo,`impresora_numeroDeSerie`=$impresora,`servidor_numeroDeSerie`= $servidor, `estado`='$estado', `resolucion`='$resolucion' WHERE `id` = '$id'")){
-
+            if($query = $mysqli->query("UPDATE `equipo` SET `nombre`='$marca', `so`='$so', `modelo`= '$modelo', `estado`='$estado', `usuarioAsignado`='$usuario', `ip`= '$ip' WHERE `numeroDeSerie` = '$id'")){
 
             /*Cerramos la conexión con la base de datos*/
             $mysqli->close();

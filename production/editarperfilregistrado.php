@@ -14,6 +14,12 @@
 
     }
 
+    if ($_SESSION['registrado']->getPermiso() != 1){
+
+       echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
+
+    }
+
 ?>
 
 

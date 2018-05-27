@@ -115,7 +115,12 @@
                   <li><a href="incidenciasasignadas.php"><i class="fa fa-edit"></i> Ver tickets pendientes</span></a>
                   <li><a href="verusuariosregistrados.php"><i class="fa fa-edit"></i> Datos de usuarios</span></a>
                   </li>
+                  <li><a href="verimpresoras.php"><i class="fa fa-edit"></i> Inventario Impresoras</span></a>
                   </li>
+                  <li><a href="verequipos.php"><i class="fa fa-edit"></i> Inventario Equipos</span></a>
+                  </li>
+                  <li><a href="verservidores.php"><i class="fa fa-edit"></i> Inventario Servidores</span></a>
+                  </li> 
                 </ul>
               </div>
               
