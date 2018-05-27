@@ -472,6 +472,7 @@ session_start();
             $id = $_GET['ticket'];
             $estado = $_POST['estado'];
             $resolucion = $_POST['resolucion'];
+            $fechaCierre = "0000-00-00 00:00:00";
 
             if($_POST['equipo']!= "No corresponde"){
 
@@ -503,13 +504,18 @@ session_start();
               
             }
 
+            if ($estado == "Cerrada"){
+              
+              $fechaCierre = new DateTime();
+              $fechaCierre = $fechaCierre->format('Y-m-d H:i:s');
+            }
 
             $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
             $mysqli->set_charset("utf8");
 
 
             /*Mediante las variables declaradas al principio y en las líneas anteriores, actualizamos los datos del usuario en la base de datos*/
-            if($query = $mysqli->query("UPDATE `ticket` SET `equipo_numeroDeSerie`=$equipo,`impresora_numeroDeSerie`=$impresora,`servidor_numeroDeSerie`= $servidor, `estado`='$estado', `resolucion`='$resolucion' WHERE `id` = '$id'")){
+            if($query = $mysqli->query("UPDATE `ticket` SET `equipo_numeroDeSerie`=$equipo,`impresora_numeroDeSerie`=$impresora,`servidor_numeroDeSerie`= $servidor, `estado`='$estado', `resolucion`='$resolucion',`fecha_cierre`='$fechaCierre' WHERE `id` = '$id'")){
 
 
             /*Cerramos la conexión con la base de datos*/
