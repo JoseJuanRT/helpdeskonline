@@ -51,7 +51,7 @@ session_start();
         $("button").click(function(){
           id = $(this).parents("tr").find("td").eq(1).html();
           user = $(this).parents("tr").find("td").eq(6).html();
-          url = "modificarImpresoras.php?ticket="+id+"&user="+user;
+          url = "modificarimpresoras.php?ticket="+id+"&user="+user;
           location.href=url;
         });
       });
