@@ -203,7 +203,7 @@
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telefono" >Teléfono <span class="required">(+34) *</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="telefono" name="telefono"  maxlength="9" class="form-control col-md-7 col-xs-12" pattern="^[0-9]{9}" value='<?php echo $_SESSION["registrado"]->getTelefono()?>' title="El teléfono debe contener 9 carácteres numéricos"></input>
+                                            <input type="text" id="telefono" name="telefono"  maxlength="9" class="form-control col-md-7 col-xs-12" pattern="^[0-9]{9}" value='<?php echo $_SESSION["registrado"]->getTelefono()?>' title="El teléfono debe contener 9 carácteres numéricos, si desconoce el teléfono del usuario puede utilizar el valor 000000000"></input>
                                           </div>
                                         </div>
 
@@ -311,7 +311,7 @@
 				}else{
 
 					/*Si la imágen cumple con el tamaño, le indicamos la ruta de destino*/
-					$destino = "/home/u752761204/public_html/production/images/";
+					$destino = "images/";
 					/*Creamos un identificador único*/
 					$id = time();
 					/*Le cambiamos el nombre a la imágen añadiéndole el id único*/

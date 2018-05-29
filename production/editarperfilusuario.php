@@ -343,7 +343,7 @@
 				}else{
 
 					/*Si la imágen cumple con el tamaño, le indicamos la ruta de destino*/
-					$destino = "/home/u752761204/public_html/production/images/";
+					$destino = "images/";
 					/*Creamos un identificador único*/
 					$id = time();
 					/*Le cambiamos el nombre a la imágen añadiéndole el id único*/
