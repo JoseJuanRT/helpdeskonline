@@ -1,19 +1,18 @@
 <?php
-  /*Incluimos el fichero de las funciones*/
+  /*Se incluyen los ficheros necesarios y se incia sesión*/ /*Done*/
   include_once('funciones.php');
   /*Iniciamos la sesión*/
   session_start();
-  
-?>
 
-<?php
-
+    /*Controlamos que exista una sesión de usuario*/
     if (!isset($_SESSION['registrado'])) {
     
-          echo "<script> window.location.href='login.php'</script>";
+          echo "<script> window.location.href='login.php?salir=true'</script>";
 
     }
 
+    /*Controlamos que el usuario tenga los permisos correspondientes, 
+    en caso de que fuese otro usuario el que intenta acceder a la página lo enviamos al login dónde se le cerrará la sesión.*/
     if ($_SESSION['registrado']->getPermiso() != 1){
 
        echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
@@ -33,14 +32,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Portal del usuario </title>
-
+    <!-- Estilos de la plantilla descargada -->
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
@@ -57,11 +55,13 @@
       /*Esta es la función que valida las contraseñas*/
       function validar(){
 
+        /*Obtenemos los valores actualizados mediante la función anterior*/
         funcionesRegistro();
 
           if (password.value != password2.value){
             /*Se le inserta un texto*/
             error.innerHTML = "Las contraseñas no coinciden, introduzca la misma contraseña y haga clic fuera del formulario para poder guardar los cambios.";
+            /*Deshabilitamos el botón del formulario*/
             botonS.disabled = true;
             
           }else{
@@ -87,14 +87,15 @@
 
             <div class="clearfix"></div>
 
-            <!-- menu profile quick info -->
+            <!-- Saludo al usuario -->
             <div class="profile clearfix">
-
+              <!-- Obtenemos el icono del usuario registrado -->
               <div class="profile_pic">
                 <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
+                <!-- Separamos el nombre del usuario del dominio de correo para mosrar sólo el nombre -->
                 <h2><?php echo cortarNombre($_SESSION['registrado']->getEmail())?></h2>
                 <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php?salir=true">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
@@ -102,10 +103,10 @@
               </div>
               <div class="clearfix"></div>
             </div>
-            <!-- /menu profile quick info -->
+            <!-- /Saludo al usuario -->
             <br />
 
-            <!-- sidebar menu -->
+            <!-- Menu botonoes izquierdo -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>General</h3>
@@ -128,39 +129,35 @@
                       <li><a href="serviciocerrado.php">Cerrada</a></li>
                     </ul>
                   </li>
-
                 </ul>
               </div>
-              
             </div>
          
           </div>
         </div>
 
-        <!-- top navigation -->
+        <!-- Barra superior -->
         <div class="top_nav">
           <div class="nav_menu">
             <nav>
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
-
-              <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li>
-                      <a href="editarperfilregistrado.php">
-                        <span>Editar perfil</span>
-                      </a>
-                    </li>
-                    <li><a href="login.php?salir=true"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                  </ul>
-                </li>
-
+                    <ul class="nav navbar-nav navbar-right">
+                      <li class="">
+                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
+                          <span class=" fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-usermenu pull-right">
+                          <li>
+                            <a href="editarperfilregistrado.php">
+                              <span>Editar perfil</span>
+                            </a>
+                          </li>
+                          <li><a href="login.php?salir=true"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                        </ul>
+                      </li>
                     </li>
                   </ul>
                 </li>
@@ -168,16 +165,16 @@
             </nav>
           </div>
         </div>
-        <!-- /top navigation -->
 
-        <!-- page content -->
+        <!-- /Barra superior -->
+
+        <!-- Contenido de la página -->
      
+          <!-- Añadir contenido -->
 
-                 <!-- Add context -->
                           <div class="right_col" role="main">
                             <div class="">
                               <div class="clearfix"></div>
-
                               <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="x_panel">
@@ -187,10 +184,12 @@
                                     </div>
                                     <div class="x_content">
 
+                                      <!-- Creamos formulariotipo multipart/form-data -->
                                       <form enctype="multipart/form-data" action='' method='POST' class="form-horizontal form-label-left">
 
                                         <span class="section">Datos del perfil</span>
 
+                                        <!-- Email del usuario de la sesión actual sin opción a cambio -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="solicitante">Usuario <span class="required">*</span>
                                           </label>
@@ -199,6 +198,7 @@
                                           </div>
                                         </div>
 
+                                        <!-- Departamento del usuario actual sin opción a cambio -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="departamento">Departamento <span class="required">*</span>
                                           </label>
@@ -207,14 +207,16 @@
                                           </div>
                                         </div>
 
+                                        <!-- Input con un pattern el cual sólo permite 9 números (Teléfono) -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telefono" >Teléfono <span class="required">(+34) *</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="telefono" name="telefono"  maxlength="9" class="form-control col-md-7 col-xs-12" pattern="^[0-9]{9}" title="El teléfono debe contener 9 carácteres numéricos"></input>
+                                            <input type="text" id="telefono" name="telefono"  maxlength="9" class="form-control col-md-7 col-xs-12" pattern="^[0-9]{9}" value='<?php echo $_SESSION["registrado"]->getTelefono()?>' title="El teléfono debe contener 9 carácteres numéricos"></input>
                                           </div>
                                         </div>
 
+                                        <!-- Input tipo file para subir imagen de icono, máximo 500KB-->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="icono">Icono <span class="required">*</span>
                                           </label>
@@ -223,6 +225,8 @@
                                           </div>
                                         </div>
 
+                                        <!-- Input con validación de email "@"" "carácteres despues del punt final", ... 
+                                        al sacar el foco valida si es igual qu eel siguiente input y si no lo es muestra un mensaje de error y desactiva el botón.-->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Contraseña <span class="required">*</span>
                                           </label>
@@ -232,6 +236,7 @@
                                           </div>
                                         </div>
                                         
+                                        <!-- Input al sacar el foco valida si es igual que el input anterior y si no lo es muestra un mensaje de error y desactiva el botón.-->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password2">Repita contraseña <span class="required">*</span>
                                           </label>
@@ -246,7 +251,7 @@
                                         <br></br>
                                           <center>
                                           <div class="col-md-6 col-md-offset-3">
-                                            <!--<button class="btn btn-primary">Cancelar</button>-->
+                                            <!--Botón para guarar cambios-->
                                             <button type="submit" id="botonS" type="submit" name="botonS" class="btn btn-danger" disabled="true">Guardar cambios</button>
                                           </div>
                                           </center>
@@ -260,49 +265,44 @@
                             </div>
                           </div>
          
-                    <!-- end project list -->
+                    <!-- Fin del formulario -->
 
                   </div>
                 </div>
               </div>
             </div>
         
-        <!-- /page content -->
+        <!-- /Fin del contenido -->
 
       </div>
     </div>
 
     <?php
-    /*Si se ha pulsado el botón de login*/
+
+    /*Si se ha pulsado el botón*/
     if (isset($_POST['botonS'])){
 
+      /*Obtenemos los valores del formulario que nos interesan*/
     	$semaforoError = 0;
-    	$telefono = $_SESSION['registrado'] -> getTelefono();
-    	$icono = "images/icono.png";
+    	$telefono = $_POST['telefono'];
+    	/*Es muy importante mantener esta configuración de icono puesto que nos guarda el valor del último icono
+        y en caso de no subir imagen volveremos a grabar este valor en la base de datos*/
+    	$icono = $_SESSION['registrado']->getIcono();
 
+            /*Abrimos conexión a la base de datos*/
+            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+            $mysqli->set_charset("utf8");
 
-		      $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-        	$mysqli->set_charset("utf8");
-
-            if (isset($_POST['telefono'])){
-            	
-            	$telefono = $_POST['telefono'];
-
-            }
-
-            if ($telefono == ""){
-
-              $telefono = "Desconocido";
-              
-            }
-
+      		/*Si el nombre de la imagen es diferente a vacío procedemos a guardar la imagen*/
 			if($_FILES['icono']['name'] != ""){
 
 				/*Verificamos que no sea más grande de 500KB*/
 				if ($_FILES['icono']['size'] > 512000) {
 					/*Si es más grande se lo indicamos al usuario y aumentamos la variable semáforo*/
 					$semaforoError++;
+          			/*Devolvemos a la cariable teléfono el valor original*/
 					$telefono = $_SESSION['registrado'] -> getTelefono();
+          			/*Lanzamos mensaje de error*/
 					echo '<script language="javascript">alert("La imagen solo puede tener 500 KB de peso");</script>';
 					
 				}else{
@@ -320,7 +320,8 @@
 						if(move_uploaded_file($_FILES['icono']['tmp_name'], $destino)){ 
 
 							/*De esta manera evitamos eliminar el icono por defecto de la carpeta del servidor para los usuarios recién registrados,
-							donde ico.jpg será el nombre de la imágen por defecto*/
+							donde icono.png será el nombre de la imágen por defecto*/
+
 							if ($_SESSION['registrado']->getIcono() != 'images/icono.png'){
 											
 							/*Borramos la imágen que tenía antes el usuario en la carpeta del servidor*/
@@ -328,7 +329,7 @@
 							}
 										
 							/*Cambiamos la imágen en la sesión del usuario*/
-							$_SESSION['registrado'] -> setIcono("images/".$_FILES['icono']['name']);
+							$_SESSION['registrado'] -> setIcono($destino);
 							/*Modificamos la variable creada anteriormente*/
 							$icono = $_SESSION['registrado'] -> getIcono();
 
@@ -350,7 +351,7 @@
 				/*Si el semáforo esta a 0 quiere decir que no se ha producido ningún error */
 				if($semaforoError == 0){
 
-				/*Actualizamos los campos nombre, email y firma en la sesión y también en las variables declaradas al principio*/
+				/*Almacenamos los valores que nos interesan*/
 				$usuario = $_SESSION['registrado'] -> getEmail();
 				$_SESSION['registrado'] -> setTelefono($telefono);
 				$_SESSION['registrado'] -> setIcono($icono);
@@ -372,8 +373,9 @@
 				
 				}else{
 					/*En caso de que la variable semáforo sema mayor a 0, quiere decir que se ha producido algún error. Por lo que mantenemos al usuario en la misma página*/
-          echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
+          			echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
 					echo "<script> window.location.href='abririncidencia.php'</script>";
+
 				}	
 				
 			}
@@ -382,6 +384,7 @@
       
     ?>
 
+    <!-- JavaScript de la plantilla descargada -->
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -389,9 +392,8 @@
     <!-- FastClick -->
     <script src="../vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    
-    <!--Scripts personalizados -->
+    <script src="../vendors/nprogress/nprogress.js"></script>  
+    <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
   </body>
 </html>

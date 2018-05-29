@@ -12,10 +12,37 @@ session_start();
 
      /*Controlamos que el usuario tenga los permisos correspondientes, 
      en caso de que fuese otro usuario el que intenta acceder a la página lo enviamos al login dónde se le cerrará la sesión.*/
-     if ($_SESSION['registrado']->getPermiso() != 2){
+     if ($_SESSION['registrado']->getPermiso() != 3){
 
        echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
 
+     }
+
+     /*Si hemos recargado la página pasándo por url una variable usar*/
+     if (isset($_GET['user'])){
+
+          /*Abrimos una conexión hacia la base de datos*/
+          $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+          $mysqli->set_charset("utf8");
+
+         /*Obtenemos el e-mail del usuario*/
+         $email = $_GET['user'];
+
+         /*Si se elimina correctamente*/
+         if($query = $mysqli->query("DELETE FROM `usuario` WHERE `email`= '$email'")){
+
+          /*Indicamos que se ha eliminado y devolvemos a la página original*/
+         	echo '<script language="javascript">alert("Usuario eliminado correctamente");</script>';
+         	echo "<script language='javascript'> window.location.href='eliminarusuarios.php';</script>";
+
+         }else{
+
+          /*Indicamos error y devolvemos a la página original*/
+         	echo '<script language="javascript">alert("No se ha podido eliminar el usuario");</script>';
+         	echo "<script language='javascript'> window.location.href='eliminarusuarios.php';</script>";
+
+         }
+     	
      }
 
   ?>
@@ -42,16 +69,15 @@ session_start();
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+
     <script>
 
-       /*Al cargar la página se crea un evento onClic en todos los botones, el cual cargará la página de modificación enviando los datos
-      del ticket sobre el cual se ha clicado, para modificar el ticket*/
+      /*Al cargar la página se crea un evento onClic en todos los botones, el cual recargará la página enviando los datos
+      del usuario sobre el cual se ha clicado, para elminarlo*/
       $(document).ready(function(){
         $("button").click(function(){
           id = $(this).parents("tr").find("td").eq(1).html();
-          solicitante = $(this).parents("tr").find("td").eq(6).html();
-          titulo = $(this).parents("tr").find("td").eq(3).html();
-          url = "modificarincidencia.php?ticket="+id+"&solicitante="+solicitante+"&titulo="+titulo;
+          url = "eliminarusuarios.php?user="+id;
           location.href=url;
         });
       });
@@ -73,8 +99,9 @@ session_start();
 
             <!-- Saludo al usuario -->
             <div class="profile clearfix">
-              <!-- Obtenemos el icono del usuario registrado -->
+
               <div class="profile_pic">
+                <!-- Obtenemos el icono del usuario registrado -->
                 <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
@@ -95,27 +122,20 @@ session_start();
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="incidenciassinasignar.php"><i class="fa fa-home"></i> Tickets sin asignar</span></a>
+                  <li><a href="datosusuarios.php"><i class="fa fa-home"></i> Re-asignar incidencias</span></a>
                   </li>
-                  <li><a href="#"><i class="fa fa-edit"></i> Ver tickets pendientes</span></a>
+                  <li><a href="modificarusuarios.php"><i class="fa fa-edit"></i> Modificar usuarios</span></a>
                   </li>
-                  <li><a href="verusuariosregistrados.php"><i class="fa fa-edit"></i> Datos de usuarios</span></a>
+                  <li><a href="crearusuarios.php"><i class="fa fa-edit"></i> Crear usuarios</span></a>
                   </li>
-                  <li><a href="crearequipos.php"><i class="fa fa-edit"></i> Alta de equipos</span></a>
-                  </li>
-                  <li><a href="verimpresoras.php"><i class="fa fa-edit"></i> Inventario Impresoras</span></a>
-                  </li>
-                  <li><a href="verequipos.php"><i class="fa fa-edit"></i> Inventario Equipos</span></a>
-                  </li>
-                  <li><a href="verservidores.php"><i class="fa fa-edit"></i> Inventario Servidores</span></a>
-                  </li>                                 
+                  <li><a href="#"><i class="fa fa-edit"></i> Eliminar usuarios</span></a>
+                  </li>                   
                 </ul>
-              </div>   
+              </div>
             </div>
          
           </div>
         </div>
-
 
        <!-- Barra superior -->
         <div class="top_nav">
@@ -132,7 +152,7 @@ session_start();
                         </a>
                         <ul class="dropdown-menu dropdown-usermenu pull-right">
                           <li>
-                            <a href="editarperfiltecnico.php">
+                            <a href="editarperfiladministrador.php">
                               <span>Editar perfil</span>
                             </a>
                           </li>
@@ -157,34 +177,31 @@ session_start();
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Portal de técnico <small>Gestión de tickets</small></h3>
+                <h3>Portal administrador <small>Gestión de usuarios</small></h3>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Tickets pendientes de gestionar</h2>
+                    <h2>Datos de usuarios registrados</h2>
+                    
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
-                    <!-- Inicio de tabla -->
+                    <!-- Inicio de tabla -->>
                     <table class="table table-striped projects">
                       <thead>
                         <tr>
                           <th style="width: 1%">#</th>
-                          <th style="width: 20%">ID ticket</th>
-                          <th>Tipo</th>
-                          <th>Título</th>
-                          <th>Estado</th>
-                          <th>Fecha apertura</th>
-                          <th>Solicitante</th>
-                          <th>Impresora asociada</th>
-                          <th>Equipo asociado</th>
-                          <th>Servidor asociado</th>
-                          <th>Asigar Ticket</th>
-                          
+                          <th style="width: 20%">Usuario</th>
+                          <th>Contraseña</th>
+                          <th>Permiso</th>
+                          <th>Ubicación icono</th>
+                          <th>Departamento</th>
+                          <th>Teléfono</th>
+                          <th>Eliminar usuario</th>
                         </tr>
                       </thead>
 
@@ -192,16 +209,12 @@ session_start();
                                   /*Abrimos conexión con la base de datos*/
                                   $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
                                   $mysqli->set_charset("utf8");
-                                  
-                                  /*Obtenemos el e-maildel usuario registrado*/
-                                  $login = $_SESSION['registrado'] -> getEmail();
 
-                                  /*Seleccionamos todos los datos de la tabla ticket que estén abiertos y que sean del usuario actual*/
-                                  $query = $mysqli->query("SELECT * FROM `ticket` WHERE `estado`= 'Abierta' AND `tecnico`= '$login' ORDER BY `tipo` = 'solicitud'");
+                                  /*Seleccionamos todos los usuarios con permisos de registrado y técnico*/
+                                  $query = $mysqli->query("SELECT * FROM `usuario` WHERE `permiso`= 1 OR `permiso` = 2");
 
                                   /*Incializamos el cuepo de la tabla*/
                                   echo "<body>";
-
                                   /*Mientras existan datos a recorrer en la búsqueda*/
                                   while($fila = $query->fetch_array(MYSQLI_NUM)){
 
@@ -211,13 +224,10 @@ session_start();
                                           echo "<td>".$fila[0]."</td>";
                                           echo "<td>".$fila[1]."</td>";
                                           echo "<td>".$fila[2]."</td>";
+                                          echo "<td>".$fila[3]."</td>";
                                           echo "<td>".$fila[4]."</td>";
-                                          echo "<td>".$fila[6]."</td>";
-                                          echo "<td>".$fila[7]."</td>";
-                                          echo "<td>".$fila[8]."</td>";
-                                          echo "<td>".$fila[9]."</td>";
-                                          echo "<td>".$fila[10]."</td>";
-                                          echo '<td><button>Modificar ticket</button></td>';
+                                          echo "<td>".$fila[5]."</td>";
+                                          echo '<td><button>Eliminar usuario</button></td>';
                                         echo "</tr>";
 
                                   }
@@ -225,13 +235,13 @@ session_start();
                                   /*Cerrramos la tabla*/
                                   echo "</body>";
                                   echo "</table>";
-
                                   /*Cerramos la conexión con la base de datos*/
                                   $mysqli->close();
                               ?>
 
 
                     <!-- Fin de la Tabla -->
+
 
                   </div>
                 </div>
@@ -243,7 +253,6 @@ session_start();
 
       </div>
     </div>
-
 
     <!-- JavaScript de la plantilla descargada -->
     <!-- jQuery -->

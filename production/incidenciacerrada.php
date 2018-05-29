@@ -1,14 +1,22 @@
 <?php
-/*Se incluyen los ficheros necesarios*/
+/*Se incluyen los ficheros necesarios y se incia sesión*/ /*Done*/
 include_once('funciones.php');
 session_start();
 
-
+    /*Controlamos que exista una sesión de usuario*/
      if (!isset($_SESSION['registrado'])){
 
-        echo "<script language='javascript'> window.location.href='login.php';</script>";
+        echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
 
         }
+
+    /*Controlamos que el usuario tenga los permisos correspondientes, 
+    en caso de que fuese otro usuario el que intenta acceder a la página lo enviamos al login dónde se le cerrará la sesión.*/
+    if ($_SESSION['registrado']->getPermiso() != 1){
+
+       echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
+
+    }
   ?>
 
 <!DOCTYPE html>
@@ -22,13 +30,13 @@ session_start();
 
     <title>Portal de incidencias </title>
 
+    <!-- Estilos de la plantilla descargada -->
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
   </head>
@@ -44,14 +52,16 @@ session_start();
 
             <div class="clearfix"></div>
 
-            <!-- menu profile quick info -->
+            <!-- Saludo al usuario -->
             <div class="profile clearfix">
 
               <div class="profile_pic">
+                <!-- Obtenemos el icono del usuario registrado -->
                 <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Bienvenido,</span>
+                <!-- Separamos el nombre del usuario del dominio de correo para mosrar sólo el nombre -->
                 <h2><?php echo cortarNombre($_SESSION['registrado']->getEmail())?></h2>
                 <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php?salir=true">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
@@ -59,10 +69,10 @@ session_start();
               </div>
               <div class="clearfix"></div>
             </div>
-            <!-- /menu profile quick info -->
+            <!-- /Saludo al usuario -->
             <br />
 
-            <!-- sidebar menu -->
+            <!-- Menu botonoes izquierdo -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>General</h3>
@@ -95,30 +105,28 @@ session_start();
           </div>
         </div>
 
-        <!-- top navigation -->
+        <!-- Barra superior -->
         <div class="top_nav">
           <div class="nav_menu">
             <nav>
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
-
-              <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li>
-                      <a href="editarperfilregistrado.php">
-                        <span>Editar perfil</span>
-                      </a>
-                    </li>
-                    <li><a href="login.php?salir=true"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                  </ul>
-                </li>
-
+                    <ul class="nav navbar-nav navbar-right">
+                      <li class="">
+                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <img src='<?php echo $_SESSION["registrado"]->getIcono()?>' alt=""><?php echo cortarNombre($_SESSION['registrado']->getEmail())?>
+                          <span class=" fa fa-angle-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-usermenu pull-right">
+                          <li>
+                            <a href="editarperfilregistrado.php">
+                              <span>Editar perfil</span>
+                            </a>
+                          </li>
+                          <li><a href="login.php?salir=true"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                        </ul>
+                      </li>
                     </li>
                   </ul>
                 </li>
@@ -126,11 +134,11 @@ session_start();
             </nav>
           </div>
         </div>
-        <!-- /top navigation -->
+        <!-- /Barra superior -->
 
-        <!-- page content -->
+        <!-- Contenido de la página -->
      
-                 <!-- Add context -->
+          <!-- Añadir contenido -->
 
           <div class="right_col" role="main">
           <div class="">
@@ -150,7 +158,7 @@ session_start();
                   </div>
                   <div class="x_content">
 
-                    <!-- start project list -->
+                    <!-- Inicio de tabla -->
                     <table class="table table-striped projects">
                       <thead>
                         <tr>
@@ -163,24 +171,28 @@ session_start();
                           <th>Fecha apertura</th>
                           <th>Fecha cierre</th>
                           <th>Estado</th>
-
                         </tr>
                       </thead>
 
                       <?php 
 
-                           
+                                  /*Abrimos conexión con la base de datos*/
                                   $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
                                   $mysqli->set_charset("utf8");
-                                
+                                  
+                                  /*Obtenemosel correo del usuario registrado*/
                                   $login = $_SESSION['registrado'] -> getEmail();
 
+                                  /*Buscamos todos los tickets del usuario que estén en estado: cerrados*/
                                   $query = $mysqli->query("SELECT * FROM `ticket` WHERE `usuario_email_solicitante`= '$login' AND `estado`= 'Cerrada' AND `tipo`= 'incidencia' ORDER BY `id` = 0");
 
+                                   /*Incializamos el cuepo de la tabla*/
                                   echo "<body>";
+
                                   /*Mientras existan datos a recorrer en la búsqueda*/
                                   while($fila = $query->fetch_array(MYSQLI_NUM)){
 
+                                       /*Vamos generando filas en la tabla con los datos que nos interesan.*/
                                        echo "<tr>";
                                           echo "<td> # </td>";
                                           echo "<td><a>".$fila[0]."</a></td>";
@@ -194,28 +206,27 @@ session_start();
                                         echo "</tr>";
 
                                   }
-
-                                  echo "</body>";
                                   /*Cerrramos la tabla*/
+                                  echo "</body>";
                                   echo "</table>";
                                   /*Cerramos la conexión con la base de datos*/
                                   $mysqli->close();
                               ?>
 
-                    <!-- end project list -->
+                    <!-- Fin de la Tabla -->
 
                   </div>
                 </div>
               </div>
             </div>
         
-        <!-- /page content -->
+        <!-- /Fin del contenido -->
 
 
       </div>
     </div>
 
-
+    <!-- JavaScript de la plantilla descargada -->
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->

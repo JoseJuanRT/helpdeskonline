@@ -1,5 +1,8 @@
 <?php
-	/*Se declara una clase usuario con sus respetivos getters y setters, se le crean las variables de fecha y hora por comodidad de uso en el código*/
+
+/*Done*/
+/*Se declara una clase usuario con sus respetivos getters y setters, esta clase se utilizará para tratar los datos del usuario
+loggeado de diferentes maneras en las distintas páginas, principalmente se utilizará para mostrar nombre e icono del usuario*/
 	class Usuario{
 
 		private $email;
@@ -51,8 +54,9 @@
 		}
 ?>
 
+
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener sólo el nombre del usuario*/
 	function cortarNombre($email){
 
         $arrayEmail = explode("@", $email);
@@ -63,8 +67,10 @@
 
 ?>
 
+
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener el tercer valor mostrado en el select a la hora de asignar
+  equipos del inventario a un usuario*/
 	function obtenerNumeroSerie($stringAcortar){
 
         $arrayEmail = explode(",", $stringAcortar);
@@ -75,12 +81,13 @@
 
 ?>
 
+
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerMarcaImpresora($IdImpresora){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `nombre` FROM `impresora` WHERE `numeroDeSerie` = '$IdImpresora'");
 				
@@ -96,7 +103,7 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
@@ -105,11 +112,11 @@
 
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+  /*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerSoImpresora($IdImpresora){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `so` FROM `impresora` WHERE `numeroDeSerie` = '$IdImpresora'");
 				
@@ -125,18 +132,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerModeloImpresora($IdImpresora){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `modelo` FROM `impresora` WHERE `numeroDeSerie` = '$IdImpresora'");
 				
@@ -152,18 +159,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerEstadoImpresora($IdImpresora){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `estado` FROM `impresora` WHERE `numeroDeSerie` = '$IdImpresora'");
 				
@@ -179,18 +186,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerUsuarioImpresora($IdImpresora){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `usuarioAsignado` FROM `impresora` WHERE `numeroDeSerie` = '$IdImpresora'");
 				
@@ -207,18 +214,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerIpImpresora($IdImpresora){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `ip` FROM `impresora` WHERE `numeroDeSerie` = '$IdImpresora'");
 				
@@ -234,7 +241,7 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
@@ -242,11 +249,11 @@
 
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerMarcaEquipo($IdEquipo){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `nombre` FROM `equipo` WHERE `numeroDeSerie` = '$IdEquipo'");
 				
@@ -262,7 +269,7 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
@@ -271,11 +278,11 @@
 
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerSoEquipo($IdEquipo){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `so` FROM `equipo` WHERE `numeroDeSerie` = '$IdEquipo'");
 				
@@ -291,18 +298,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerModeloEquipo($IdEquipo){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `modelo` FROM `equipo` WHERE `numeroDeSerie` = '$IdEquipo'");
 				
@@ -318,18 +325,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerEstadoEquipo($IdEquipo){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `estado` FROM `equipo` WHERE `numeroDeSerie` = '$IdEquipo'");
 				
@@ -345,18 +352,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerUsuarioEquipo($IdEquipo){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `usuarioAsignado` FROM `equipo` WHERE `numeroDeSerie` = '$IdEquipo'");
 				
@@ -373,18 +380,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerIpEquipo($IdEquipo){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `ip` FROM `equipo` WHERE `numeroDeSerie` = '$IdEquipo'");
 				
@@ -400,7 +407,7 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
@@ -408,11 +415,11 @@
 
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerMarcaServidor($IdServidor){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `nombre` FROM `servidor` WHERE `numeroDeSerie` = '$IdServidor'");
 				
@@ -428,7 +435,7 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
@@ -437,11 +444,11 @@
 
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerSoServidor($IdServidor){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `so` FROM `servidor` WHERE `numeroDeSerie` = '$IdServidor'");
 				
@@ -457,19 +464,19 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerModeloServidor($IdServidor){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
-
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
+        
 			$test = $mysqli->query("SELECT `modelo` FROM `servidor` WHERE `numeroDeSerie` = '$IdServidor'");
 				
 				$testDatos = $test->fetch_array(MYSQLI_NUM);
@@ -484,18 +491,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerEstadoServidor($IdServidor){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `estado` FROM `servidor` WHERE `numeroDeSerie` = '$IdServidor'");
 				
@@ -511,19 +518,19 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerUsuarioServidor($IdServidor){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
-            
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
+
 			$test = $mysqli->query("SELECT `usuarioAsignado` FROM `servidor` WHERE `numeroDeSerie` = '$IdServidor'");
 				
 				$testDatos = $test->fetch_array(MYSQLI_NUM);
@@ -539,18 +546,18 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }
 ?>
 
 <?php
-	/*Funcion para abrir un conexión a la base de datos*/
+	/*Funcion para obtener un dato de un ítem pasándole el id en cuestión*/
 	function obtenerIpServidor($IdServidor){
 
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+        $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+        $mysqli->set_charset("utf8");
 
 			$test = $mysqli->query("SELECT `ip` FROM `servidor` WHERE `numeroDeSerie` = '$IdServidor'");
 				
@@ -566,7 +573,7 @@
                                                                        
                           }
                                                     
-                          /*Cerramos la conexión con la base de datos*/
+                       /*Cerramos la conexión con la base de datos*/
                        $mysqli->close();
 
     }

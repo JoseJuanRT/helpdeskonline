@@ -10,14 +10,53 @@
           echo "<script> window.location.href='login.php?salir=true'</script>";
 
     }
-    
+
     /*Controlamos que el usuario tenga los permisos correspondientes, 
      en caso de que fuese otro usuario el que intenta acceder a la página lo enviamos al login dónde se le cerrará la sesión.*/
-    if ($_SESSION['registrado']->getPermiso() != 2){
+    if ($_SESSION['registrado']->getPermiso() != 3){
 
        echo "<script language='javascript'> window.location.href='login.php?salir=true';</script>";
 
     }
+
+    /*Si hemos recargado la página pasándo por url una variable user*/
+     if (isset($_GET['user'])){
+
+            /*Abrimos una conexión hacia la base de datos*/
+            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+            $mysqli->set_charset("utf8");
+
+            /*Obtenemos los valores pasados por url*/
+            $id = $_GET['user'];
+
+            /*Seleccionamos todos los datos del usuario*/
+            $query = $mysqli->query("SELECT * FROM `usuario` WHERE `email`= '$id'");
+
+                    /*Variables para almacenar los datos que están en la base de datos*/
+                    $emailOriginal;
+                    $contrasenyaOriginal;
+                    $permisoOriginal;
+                    $iconoOriginal;
+                    $departamentoOriginal;
+                    $telefonoOriginal;
+                                 
+                    /*Almacenamos los datos del usuario*/
+                    while($fila = $query->fetch_array(MYSQLI_NUM)){
+
+                      $emailOriginal = $fila[0];
+                      $contrasenyaOriginal = $fila[1];
+                      $permisoOriginal = $fila[2];
+                      $iconoOriginal = $fila[3];
+                      $departamentoOriginal = $fila[4];
+                      $telefonoOriginal = $fila[5];
+
+                    }
+
+        }else{
+
+          /*Si no se ha recibido una variable por url, re-dirigimos hacia la página original*/
+          echo "<script language='javascript'> window.location.href='modificarusuarios.php';</script>";
+        }
 
 ?>
 
@@ -31,7 +70,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Portal de técnico </title>
+    <title>Portal de administrador </title>
 
     <!-- Estilos de la plantilla descargada -->
     <!-- Bootstrap -->
@@ -88,7 +127,7 @@
 
             <div class="clearfix"></div>
 
-            <!-- menu profile quick info -->
+            <!-- Saludo al usuario -->
             <div class="profile clearfix">
               <!-- Obtenemos el icono del usuario registrado -->
               <div class="profile_pic">
@@ -112,25 +151,23 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="incidenciassinasignar.php"><i class="fa fa-home"></i> Tickets sin asignar</span></a>
+                  <li><a href="datosusuarios.php"><i class="fa fa-home"></i> Re-asignar incidencias</span></a>
                   </li>
-                  <li><a href="incidenciasasignadas.php"><i class="fa fa-edit"></i> Ver tickets pendientes</span></a>
-                  <li><a href="verusuariosregistrados.php"><i class="fa fa-edit"></i> Datos de usuarios</span></a>
+                  <li><a href="modificarusuarios.php"><i class="fa fa-edit"></i> Modificar usuarios</span></a>
                   </li>
-                  <li><a href="verimpresoras.php"><i class="fa fa-edit"></i> Inventario Impresoras</span></a>
+                  <li><a href="crearusuarios.php"><i class="fa fa-edit"></i> Crear usuarios</span></a>
                   </li>
-                  <li><a href="verequipos.php"><i class="fa fa-edit"></i> Inventario Equipos</span></a>
-                  </li>
-                  <li><a href="verservidores.php"><i class="fa fa-edit"></i> Inventario Servidores</span></a>
-                  </li> 
+                  <li><a href="eliminarusuarios.php"><i class="fa fa-edit"></i> Eliminar usuarios</span></a>
+                  </li>  
                 </ul>
-              </div>    
+              </div>
+              
             </div>
          
           </div>
         </div>
 
-        <!-- top navigation -->
+        <!-- Barra superior -->
         <div class="top_nav">
           <div class="nav_menu">
             <nav>
@@ -145,7 +182,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-usermenu pull-right">
                           <li>
-                            <a href="editarperfilregistrado.php">
+                            <a href="editarperfiladministrador.php">
                               <span>Editar perfil</span>
                             </a>
                           </li>
@@ -173,7 +210,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="x_panel">
                                     <div class="x_title">
-                                      <h2>Perfil de técnico</h2>
+                                      <h2>Perfil de administrador</h2>
                                       <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
@@ -183,34 +220,34 @@
 
                                         <span class="section">Datos del perfil</span>
 
-                                        <!-- Email del usuario de la sesión actual sin opción a cambio -->
+                                        <!-- Email del usuario pasado por url -->
                                         <div class="item form-group">
-                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="solicitante">Usuario <span class="required">*</span>
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Usuario <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="solicitante" name="solicitante" required="required" class="form-control col-md-7 col-xs-12" value='<?php echo $_SESSION["registrado"]->getEmail()?>' disabled></input>
+                                            <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" value='<?php echo $emailOriginal ?>'' disabled></input>
                                           </div>
                                         </div>
 
-                                        <!-- Departamento del usuario actual sin opción a cambio -->
+                                        <!-- Departamento del usuario pasado por url -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="departamento">Departamento <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="departamento" name="departamento" class="form-control col-md-7 col-xs-12" value='<?php echo $_SESSION["registrado"]->getDepartamento()?>' required="required" disabled></input>
+                                            <input type="text" id="departamento" name="departamento" class="form-control col-md-7 col-xs-12" value='<?php echo $departamentoOriginal ?>'></input>
                                           </div>
                                         </div>
 
-                                        <!-- Input con un pattern el cual sólo permite 9 números (Teléfono) -->
+                                        <!-- Teléfono del usuario pasado por url -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telefono" >Teléfono <span class="required">(+34) *</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="telefono" name="telefono"  maxlength="9" class="form-control col-md-7 col-xs-12" pattern="^[0-9]{9}" value='<?php echo $_SESSION["registrado"]->getTelefono()?>' title="El teléfono debe contener 9 carácteres numéricos"></input>
+                                            <input type="text" id="telefono" name="telefono"  maxlength="9" class="form-control col-md-7 col-xs-12" pattern="^[0-9]{9}" title="El teléfono debe contener 9 carácteres numéricos, si desconoce el teléfono del usuario puede utilizar el valor 000000000" value='<?php echo $telefonoOriginal ?>'></input>
                                           </div>
                                         </div>
 
-                                        <!-- Input tipo file para subir imagen de icono, máximo 500KB-->
+                                        <!-- Input para cargar nuevo icono -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="icono">Icono <span class="required">*</span>
                                           </label>
@@ -219,37 +256,48 @@
                                           </div>
                                         </div>
 
+                                        <!-- Permiso del usuario pasado por url -->
+                                        <div class="item form-group">
+                                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="permiso">Permiso <span class="required">*</span>
+                                          </label>
+                                          <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type='text' id="permiso" name="permiso" class="form-control col-md-7 col-xs-12" pattern="^[1-3]{1}" title="Introduzca valor correcto: 1-Usuario, 2-técnico, 3-Administrador" value='<?php echo $permisoOriginal ?>'></input>
+                                          </div>
+                                        </div>
+
                                         <!-- Input con validación de email "@"" "carácteres despues del punt final", ... 
-                                        al sacar el foco valida si es igual qu eel siguiente input y si no lo es muestra un mensaje de error y desactiva el botón.-->
+                                        al sacar el foco valida si es igual qu eel siguiente input y si no lo es muestra un mensaje de error y desactiva el botón,-->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Contraseña <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" required pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" value='<?php echo $_SESSION['contrasenyaSinCifrar']?>' onblur="validar()" required="required"></input>
+                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" onblur="validar()"></input>
                                             <p id="error" style="color:red"></p>
                                           </div>
                                         </div>
                                         
-                                        <!-- Input al sacar el foco valida si es igual que el input anterior y si no lo es muestra un mensaje de error y desactiva el botón.-->
+                                        <!-- Segundo input tipo contraseña del usuario -->
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password2">Repita contraseña <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="password2" name="password2" class="form-control col-md-7 col-xs-12" onblur="validar()" required="required"></input>
+                                            <input type="text" id="password2" name="password2" class="form-control col-md-7 col-xs-12" onblur="validar()"></input>
                                           </div>
                                         </div>
+
 
                                         <div class="ln_solid"></div>
                                         <div class="form-group">
                                         <br></br>
                                           <center>
                                           <div class="col-md-6 col-md-offset-3">
-                                            <!--Botón para guardar cambios-->
-                                            <button type="submit" id="botonS" type="submit" name="botonS" class="btn btn-danger" disabled="true">Guardar cambios</button>
+                                            <!-- Botón para guardar cambios-->
+                                            <button type="submit" id="botonS" type="submit" name="botonS" class="btn btn-danger">Guardar cambios</button>
                                           </div>
                                           </center>
                                         </div>
                                       </form>
+
                                     </div>
                                   </div>
                                 </div>
@@ -270,42 +318,26 @@
     </div>
 
     <?php
+
     /*Si se ha pulsado el botón*/
     if (isset($_POST['botonS'])){
 
-      /*Obtenemos los valores del formulario que nos interesan*/
-    	$semaforoError = 0;
-    	$telefono = $_POST['telefono'];
-    	/*Es muy importante mantener esta configuración de icono puesto que nos guarda el valor del último icono
-       y en caso de no subir imagen volveremos a grabar este valor en la base de datos*/
-      $icono = $_SESSION['registrado']->getIcono();
+      /*Declaramos las variables que nos interesan*/
+      $semaforoError = 0;
+      $icono = $iconoOriginal;
 
-            /*Abrimos conexión a la base de datos*/
-            $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
-            $mysqli->set_charset("utf8");
+      /*Abrimos conexión a la base de datos*/
+      $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+      $mysqli->set_charset("utf8");
 
-            /*Si se ha indicado un teléfono diferente lo almacenamos*/
-            if (isset($_POST['telefono'])){
-            	
-            	$telefono = $_POST['telefono'];
-
-            }
-
-            /*Si teléfono tuviese un valor en blanco se cambia a "Desconocido"*/
-            if ($telefono == ""){
-            	
-            	echo '<script language="javascript">alert("Variable teléfono en blanco codificamos valor a Desconocido");</script>';
-            	$telefono = "Desconocido";
-            }
-
-      /*Si el nombre de la imagen es diferente a vacío procedemos a guardar la imagen*/
+      /*Si se ha subido una image*/
 			if($_FILES['icono']['name'] != ""){
 
 				/*Verificamos que no sea más grande de 500KB*/
 				if ($_FILES['icono']['size'] > 512000) {
+
 					/*Si es más grande se lo indicamos al usuario y aumentamos la variable semáforo*/
 					$semaforoError++;
-					$telefono = $_SESSION['registrado'] -> getTelefono();
 					echo '<script language="javascript">alert("La imagen solo puede tener 500 KB de peso");</script>';
 					
 				}else{
@@ -323,23 +355,20 @@
 						if(move_uploaded_file($_FILES['icono']['tmp_name'], $destino)){ 
 
 							/*De esta manera evitamos eliminar el icono por defecto de la carpeta del servidor para los usuarios recién registrados,
-							donde ico.jpg será el nombre de la imágen por defecto*/
-							if ($_SESSION['registrado']->getIcono() != 'images/icono.png'){
+							donde icono.png será el nombre de la imágen por defecto*/
+							if ($icono != 'images/icono.png'){
+
+				                /*Borramos la imágen que tenía antes el usuario en la carpeta del servidor*/
+				                unlink("/home/u752761204/public_html/production/".$iconoOriginal);
 											
-							/*Borramos la imágen que tenía antes el usuario en la carpeta del servidor*/
-							unlink("/home/u752761204/public_html/production/".$_SESSION['registrado'] -> getIcono());
-
 							}
-										
-							/*Cambiamos la imágen en la sesión del usuario*/
-							$_SESSION['registrado'] -> setIcono($destino);
-							/*Modificamos la variable creada anteriormente*/
-							$icono = $_SESSION['registrado'] -> getIcono();
 
+							/*Almacenamos la url de la nueva imágen*/
+				            $icono = $destino;
+							
 							}else{
 
 							$semaforoError++;
-							$telefono = $_SESSION['registrado'] -> getTelefono();
 							/*En caso de que la imágen no se haya podido guardar se le indica al usuario*/
 							echo '<script language="javascript">alert("Se ha producido un error al guardar la imagen!");</script>';
 
@@ -354,30 +383,49 @@
 				/*Si el semáforo esta a 0 quiere decir que no se ha producido ningún error */
 				if($semaforoError == 0){
 
-				/*Almacenamos los valores que nos interesan*/
-				$usuario = $_SESSION['registrado'] -> getEmail();
-				$_SESSION['registrado'] -> setTelefono($telefono);
-				$_SESSION['registrado'] -> setIcono($icono);
-				$_SESSION['contrasenyaSinCifrar'] = $_POST['password'];
-				$contrasenya = md5($_POST['password']);
+				  /*Actualizamos los campos que nos interesan actualizar*/
+
+          $email = $_GET['user'];
+          $permiso = $_POST['permiso'];
+          $departamento = $_POST['departamento'];
+          $telefono = $_POST['telefono'];
+
+          /*Si se ha cambiado la contraseña, la codificamos*/
+          if (isset($_POST['password'])){
+
+            $contrasenya = md5($_POST['password']);
+
+          }else{
+
+            $contrasenya = $contrasenyaOriginal;
+          }
+
+          /*Si el departamento se dejase en blanco, cambiamos al valor por defecto*/
+          if ($departamento == ""){
+
+              $departamento == "Desconocido";
+          }
 
 					/*Mediante las variables declaradas al principio y en las líneas anteriores, actualizamos los datos del usuario en la base de datos*/
-					if($query = $mysqli->query("UPDATE `usuario` SET `contrasenya`='$contrasenya',`icono`='$icono',`telefono`='$telefono' WHERE `email` = '$usuario' ")){
+					if($query = $mysqli->query("UPDATE `usuario` SET `contrasenya`='$contrasenya',`permiso`=$permiso,`icono`='$icono',`departamento`='$departamento',`telefono`='$telefono' WHERE `email` = '$email' ")){
 						/*Cerramos la conexión con la base de datos*/
 						$mysqli->close();
 
 						/*Le indicamos al usuario que los datos han sido actualizados y lo mandamos a la página de inicio*/
 						echo '<script language="javascript">alert("Cambios realizados correctamente");</script>';
-						echo "<script> window.location.href='incidenciassinasignar.php'</script>";
+						echo "<script> window.location.href='modificarusuarios.php'</script>";
 					}else{
+            
 						echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
-						echo "<script> window.location.href='incidenciassinasignar.php'</script>";
+						echo "<script> window.location.href='modificarusuarios.php'</script>";
 					}
 				
 				}else{
+
+
 					/*En caso de que la variable semáforo sema mayor a 0, quiere decir que se ha producido algún error. */
-          echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos");</script>';
-					echo "<script> window.location.href='incidenciassinasignar.php'</script>";
+         		    echo '<script language="javascript">alert("Se ha producido un error al guardar en la base de datos inicio");</script>';
+					echo "<script> window.location.href='modificarusuarios.php'</script>";
 				}	
 				
 			}
@@ -385,7 +433,7 @@
 
       
     ?>
-
+    
     <!-- JavaScript de la plantilla descargada -->
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
