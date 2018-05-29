@@ -330,8 +330,8 @@ session_start();
                                                 <?php 
 
                                                  /*Abrimos conexión a la base de datos*/
-                                                   $mysqli = new mysqli("localhost","root","1neesf_","bbddhelpdesk");
-                                                   $mysqli->set_charset("utf8");
+                                                    $mysqli = new mysqli("mysql.hostinger.es","u752761204_jj","1neesf_","u752761204_helpd");
+                                                    $mysqli->set_charset("utf8");
 
                                                     /*Hacemos 2 consultas igual para utilizarlas luego*/
                                                     $impresora = $mysqli->query("SELECT `nombre`,`modelo`,`numeroDeSerie` FROM `impresora` WHERE `usuarioAsignado` = '$_GET[solicitante]'");
