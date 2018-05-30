@@ -219,7 +219,7 @@
                                         <!-- Input con validación de email "@"" "carácteres despues del punt final", ... 
                                         al sacar el foco valida si es igual qu eel siguiente input y si no lo es muestra un mensaje de error y desactiva el botón.-->
                                         <br>
-                                        <p>Si no quiere modificar la contraseña, repita la su contraseña actual en el siguiente campo</p>
+                                        <center><p>Si no quiere modificar la contraseña, repita la su contraseña actual en el siguiente campo</p></center>
                                         <br>
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Contraseña <span class="required">*</span>
