@@ -224,11 +224,14 @@
 
                                         <!-- Input con validación de email "@"" "carácteres despues del punt final", ... 
                                         al sacar el foco valida si es igual qu eel siguiente input y si no lo es muestra un mensaje de error y desactiva el botón.-->
+                                        <br>
+                                        <p>Si no quiere modificar la contraseña, repita la su contraseña actual en el siguiente campo</p>
+                                        <br>
                                         <div class="item form-group">
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Contraseña <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="password" name="password" class="form-control col-md-7 col-xs-12" required pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" value='<?php echo $_SESSION['contrasenyaSinCifrar']?>' onblur="validar()" required="required"></input>
+                                            <input type="email" id="password" name="password" class="form-control col-md-7 col-xs-12" required pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" value='<?php echo $_SESSION['contrasenyaSinCifrar']?>' onblur="validar()" required="required"></input>
                                             <p id="error" style="color:red"></p>
                                           </div>
                                         </div>
@@ -238,7 +241,7 @@
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password2">Repita contraseña <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="password2" name="password2" class="form-control col-md-7 col-xs-12" onblur="validar()" required="required"></input>
+                                            <input type="email" id="password2" name="password2" class="form-control col-md-7 col-xs-12" onblur="validar()" required="required"></input>
                                           </div>
                                         </div>
 
