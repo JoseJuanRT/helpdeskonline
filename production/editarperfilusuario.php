@@ -274,7 +274,7 @@
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Contraseña <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" id="password" name="password" class="form-control col-md-7 col-xs-12" pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" onblur="validar()"></input>
+                                            <input type="password" id="password" name="password" class="form-control col-md-7 col-xs-12" pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$" title="Debería tener 8 caracteres alfanuméricos incluyendo mayúsculas y minúsculas" onblur="validar()"></input>
                                             <p id="error" style="color:red"></p>
                                           </div>
                                         </div>
@@ -284,7 +284,7 @@
                                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password2">Repita contraseña <span class="required">*</span>
                                           </label>
                                           <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="email" id="password2" name="password2" class="form-control col-md-7 col-xs-12" onblur="validar()"></input>
+                                            <input type="password" id="password2" name="password2" class="form-control col-md-7 col-xs-12" onblur="validar()"></input>
                                           </div>
                                         </div>
 
