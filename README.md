@@ -17,20 +17,14 @@ Creación de estructura HTML para el panel de usuarios registrados (Usuarios que
 Implementar funcionalidad en la estructura del panel de usuarios, páginas de apertura de incidencias y servicios.
 Implementar funcionalidad en la estructura del panel de usuarios, visualización de incidencias y servicios.
 Página para editar perfil de usuario registrado.
+Crear estructura HTML para panel de usuarios técnicos.
+Implementar funcionalidad en la estructura del panel de usuarios técnicos verificando el funcionamiento respecto a la base de datos.
+Crear estructura HTML para panel de usuarios administradores.
+Implementar funcionalidad en la estructura del panel de usuarios administradores verificando el funcionamiento respecto a la base de datos.
+Batería de pruebas completa para verificar el funcionamiento de la aplicación y la seguridad dentro de las sesiones PHP.
+Pulir iconos, tablas y colores de la web para mejorar la presentación.
 
 
 TODO:
 
-Crear estructura HTML para panel de usuarios técnicos.
-
-Implementar funcionalidad en la estructura del panel de usuarios técnicos verificando el funcionamiento respecto a la base de datos.
-
-Crear estructura HTML para panel de usuarios administradores.
-
-Implementar funcionalidad en la estructura del panel de usuarios administradores verificando el funcionamiento respecto a la base de datos.
-
-Batería de pruebas completa para verificar el funcionamiento de la aplicación y la seguridad dentro de las sesiones PHP.
-
-Pulir iconos, tablas y colores de la web para mejorar la presentación.
-
-Redacción de tdda la documentación del proyecto, capturas de la aplicación ya funcional, diagramas, etc.
+Redacción de todda la documentación del proyecto, capturas de la aplicación ya funcional, diagramas, etc.
