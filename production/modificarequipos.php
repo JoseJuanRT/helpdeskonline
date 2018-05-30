@@ -89,7 +89,7 @@ session_start();
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="incidenciassinasignar.php"><i class="fa fa-home"></i> Tickets sin asignar</span></a>
+                  <li><a href="incidenciassinasignar.php"><i class="fa fa-edit"></i> Tickets sin asignar</span></a>
                   </li>
                   <li><a href="incidenciasasignadas.php"><i class="fa fa-edit"></i> Ver tickets pendientes</span></a>
                   </li>

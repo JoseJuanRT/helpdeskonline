@@ -111,7 +111,7 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Abrir ticket <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Abrir ticket <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="abririncidencia.php">Incidencia</a></li>
                       <li><a href="abrirservicio.php">Servicio</a></li>
@@ -123,7 +123,7 @@
                       <li><a href="incidenciacerrada.php">Cerradas</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Ver servicios <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Ver servicios <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="servicioabierto.php">Abierta</a></li>
                       <li><a href="serviciocerrado.php">Cerrada</a></li>

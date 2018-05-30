@@ -122,7 +122,7 @@ session_start();
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="datosusuarios.php"><i class="fa fa-home"></i> Re-asignar incidencias</span></a>
+                  <li><a href="datosusuarios.php"><i class="fa fa-edit"></i> Re-asignar incidencias</span></a>
                   </li>
                   <li><a href="modificarusuarios.php"><i class="fa fa-edit"></i> Modificar usuarios</span></a>
                   </li>

@@ -40,7 +40,6 @@
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    <link rel=”shortcut icon” type=”image/png” href=”/home/u752761204/public_html/production/images/favicon.png”/>
   </head>
 
   <body class="nav-md">
