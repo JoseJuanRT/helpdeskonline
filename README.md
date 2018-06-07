@@ -23,8 +23,8 @@ Crear estructura HTML para panel de usuarios administradores.
 Implementar funcionalidad en la estructura del panel de usuarios administradores verificando el funcionamiento respecto a la base de datos.
 Batería de pruebas completa para verificar el funcionamiento de la aplicación y la seguridad dentro de las sesiones PHP.
 Pulir iconos, tablas y colores de la web para mejorar la presentación.
-
+Redacción de todda la documentación del proyecto, capturas de la aplicación ya funcional, diagramas, etc.
 
 TODO:
 
-Redacción de todda la documentación del proyecto, capturas de la aplicación ya funcional, diagramas, etc.
+
